@@ -82,7 +82,7 @@ jobs:
             docker pull ${{ secrets.NCP_CONTAINER_REGISTRY }}/cicd-test
             docker stop $(docker ps -a -q)
             docker rm $(docker ps -a -q)
-            docker run -d -p 8080:80 --env-file ${{ secrets.ENV_FILENAME_FRONTEND }} ${{ secrets.NCP_CONTAINER_REGISTRY }}/cicd-test
+            docker run -d -p 8080:80 --name chen-server ${{ secrets.NCP_CONTAINER_REGISTRY }}/cicd-test
             docker image prune -f
     
 #   build:
