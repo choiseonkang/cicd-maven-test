@@ -10,4 +10,9 @@ public class TestController {
     public boolean healthCheck() {
         return true;
     }
+
+    @GetMapping("/")
+    public String test() {
+        return "test 완료";
+    }
 }
