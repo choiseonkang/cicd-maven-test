@@ -84,12 +84,6 @@ jobs:
             docker rm $(docker ps -a -q)
             docker run -d -p 8080:8080 --name chen-server ${{ secrets.NCP_CONTAINER_REGISTRY }}/cicd-test
             docker image prune -f
-      
-      - name: Sleep for 30 seconds
-        uses: jakejarvis/wait-action@master
-        with:
-          time: '30s'
-        
             
       - name: connect ssh2
         uses: appleboy/ssh-action@master
@@ -102,6 +96,21 @@ jobs:
             docker pull ${{ secrets.NCP_CONTAINER_REGISTRY }}/cicd-test
             docker stop $(docker ps -a -q)
             docker rm $(docker ps -a -q)
+      
+      - name: Sleep for 30 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '30s'
+        
+            
+      - name: connect ssh3
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEV_HOST }}
+          username: ${{ secrets.DEV_USERNAME }}
+          password: ${{ secrets.DEV_PASSWORD }}
+          port: ${{ secrets.DEV_PORT2 }}
+          script: |
             docker run -d -p 8080:8080 --name chen-server ${{ secrets.NCP_CONTAINER_REGISTRY }}/cicd-test
             docker image prune -f
     
