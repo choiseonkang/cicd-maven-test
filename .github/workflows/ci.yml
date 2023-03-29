@@ -85,6 +85,11 @@ jobs:
             docker run -d -p 8080:8080 --name chen-server ${{ secrets.NCP_CONTAINER_REGISTRY }}/cicd-test
             docker image prune -f
             
+      - name: Sleep for 10 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '10s'      
+            
       - name: connect ssh2
         uses: appleboy/ssh-action@master
         with:
