@@ -79,7 +79,7 @@ jobs:
           password: ${{ secrets.DEV_PASSWORD }}
           port: ${{ secrets.DEV_PORT }}
           script: |
-            ./deploy.sh
+            sudo deploy.sh
 #            docker pull ${{ secrets.NCP_CONTAINER_REGISTRY }}/cicd-test
 #            docker stop $(docker ps -a -q)
 #            docker rm $(docker ps -a -q)
