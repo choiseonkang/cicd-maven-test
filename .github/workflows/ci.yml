@@ -54,7 +54,7 @@ jobs:
           registry: ${{ secrets.NCP_CONTAINER_REGISTRY }}
           username: ${{ secrets.NCP_ACCESS_KEY }}
           password: ${{ secrets.NCP_SECRET_KEY }}
-      - name: build and push
+      - name: blue build and push
         uses: docker/build-push-action@v3
         with:
           context: .
@@ -62,6 +62,16 @@ jobs:
           push: true
           tags: ${{ secrets.NCP_CONTAINER_REGISTRY }}/blue:latest
           cache-from: type=registry,ref=${{ secrets.NCP_CONTAINER_REGISTRY }}/blue:latest
+          cache-to: type=inline
+          
+      - name: green build and push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.NCP_CONTAINER_REGISTRY }}/green:latest
+          cache-from: type=registry,ref=${{ secrets.NCP_CONTAINER_REGISTRY }}/green:latest
           cache-to: type=inline
 #           secrets: |
 #             GIT_AUTH_TOKEN=${{ secrets.GIT_TOKEN }}
