@@ -15,20 +15,6 @@ on:
     branches: [ "master" ]
 
 jobs:
-#   build:
-
-#     runs-on: ubuntu-18.04
-
-#     steps:
-#     - uses: actions/checkout@v3
-#     - name: Set up JDK 17
-#       uses: actions/setup-java@v3
-#       with:
-#         java-version: '17'
-#         distribution: 'temurin'
-#         cache: maven
-#     - name: Build with Maven
-#       run: mvn -B package --file pom.xml
 
   push_to_registry:
     name: Push to ncp container registry
@@ -94,17 +80,12 @@ jobs:
           script: |
             docker pull ${{ secrets.NCP_CONTAINER_REGISTRY }}/blue
             docker pull ${{ secrets.NCP_CONTAINER_REGISTRY }}/green
-#            ./deploy.sh
-#            docker pull ${{ secrets.NCP_CONTAINER_REGISTRY }}/cicd-test
-#            docker stop $(docker ps -a -q)
-#            docker rm $(docker ps -a -q)
-#            docker run -d -p 8080:8080 --name chen-server ${{ secrets.NCP_CONTAINER_REGISTRY }}/cicd-test
-#            docker image prune -f
+            ./deploy.sh
             
-#       - name: Sleep for 10 seconds
-#         uses: jakejarvis/wait-action@master
-#         with:
-#           time: '10s'      
+      - name: Sleep for 10 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '10s'      
             
       - name: connect ssh2
         uses: appleboy/ssh-action@master
@@ -117,35 +98,3 @@ jobs:
             docker pull ${{ secrets.NCP_CONTAINER_REGISTRY }}/blue
             docker pull ${{ secrets.NCP_CONTAINER_REGISTRY }}/green
             ./deploy.sh
-      
-#       - name: Sleep for 30 seconds
-#         uses: jakejarvis/wait-action@master
-#         with:
-#           time: '30s'
-        
-            
-#       - name: connect ssh3
-#         uses: appleboy/ssh-action@master
-#         with:
-#           host: ${{ secrets.DEV_HOST }}
-#           username: ${{ secrets.DEV_USERNAME }}
-#           password: ${{ secrets.DEV_PASSWORD }}
-#           port: ${{ secrets.DEV_PORT2 }}
-#           script: |
-#             docker run -d -p 8080:8080 --name chen-server ${{ secrets.NCP_CONTAINER_REGISTRY }}/cicd-test
-#             docker image prune -f
-    
-#   build:
-
-#     runs-on: ubuntu-18.04
-
-#     steps:
-#     - uses: actions/checkout@v3
-#     - name: Set up JDK 17
-#       uses: actions/setup-java@v3
-#       with:
-#         java-version: '17'
-#         distribution: 'temurin'
-#         cache: maven
-#     - name: Build with Maven
-#       run: mvn -B package --file pom.xml
